@@ -76,7 +76,10 @@ export default function AccountForm({ session }: { session: Session | null }) {
   }
 
   return (
-    <div className="form-widget">
+    <div className="h-screen items-center justify-center flex flex-col text-white text-xl">
+      <div>
+        <h1 className='text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-gray-500 pb-3'>Account Information</h1>
+      </div>
       <div>
         <label htmlFor="email">Email</label>
         <input id="email" type="text" value={session?.user.email} disabled />
@@ -86,6 +89,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
         <input
           id="fullName"
           type="text"
+          className='text-black'
           value={fullname || ''}
           onChange={(e) => setFullname(e.target.value)}
         />
@@ -94,6 +98,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
         <label htmlFor="username">Username</label>
         <input
           id="username"
+          className='text-black'
           type="text"
           value={username || ''}
           onChange={(e) => setUsername(e.target.value)}
@@ -104,6 +109,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
         <input
           id="website"
           type="url"
+          className='text-black'
           value={website || ''}
           onChange={(e) => setWebsite(e.target.value)}
         />
@@ -111,7 +117,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
 
       <div>
         <button
-          className="button primary block"
+          className=""
           onClick={() => updateProfile({ fullname, username, website, avatar_url })}
           disabled={loading}
         >
