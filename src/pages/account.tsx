@@ -1,6 +1,6 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react'
-import { Database } from '../database.types'
+import { Database } from '../../types/supabase'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export default function AccountForm({ session }: { session: Session | null }) {
@@ -19,7 +19,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
       let { data, error, status } = await supabase
         .from('profiles')
         .select(`full_name, username, website, avatar_url`)
-        .eq('id', user?.id)
+        .eq('id', user?.id as string)
         .single()
 
       if (error && status !== 406) {
