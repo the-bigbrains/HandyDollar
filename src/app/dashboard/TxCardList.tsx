@@ -7,7 +7,13 @@ interface Props {
 }
 
 const TransactionCardList = (props: Props) => {
-  return props.txArray.map((tx) => <TxCard />);
+  return (
+    <div className="gap-y-2 flex flex-col items-start">
+      {props.txArray.map((tx) => (
+        <TxCard tx={tx} />
+      ))}
+    </div>
+  );
 };
 
 export default TransactionCardList;

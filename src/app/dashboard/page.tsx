@@ -8,10 +8,9 @@ export default async function Dashboard() {
   const txArray = await sync(sandboxToken);
 
   return (
-    <main className=" text-white">
+    <main className="flex flex-col text-white">
       <h1>Welcome to the dashboard</h1>
       <TransactionCardList txArray={txArray} />
-      <pre>{JSON.stringify(txArray, null, 2)}</pre>
     </main>
   );
 }
