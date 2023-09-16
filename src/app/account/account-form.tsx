@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Database } from '../../types/supabase'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { NextResponse } from 'next/server'
 
 export default function AccountForm({ session }: { session: Session | null }) {
   const supabase = createClientComponentClient<Database>()
@@ -10,11 +11,16 @@ export default function AccountForm({ session }: { session: Session | null }) {
   const [username, setUsername] = useState<string | null>(null)
   const [website, setWebsite] = useState<string | null>(null)
   const [avatar_url, setAvatarUrl] = useState<string | null>(null)
+  
   const user = session?.user
 
   const getProfile = useCallback(async () => {
     try {
       setLoading(true)
+
+      if(!session){
+        NextResponse.redirect("/")
+      }
 
       let { data, error, status } = await supabase
         .from('profiles')
