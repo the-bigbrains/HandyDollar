@@ -2,7 +2,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Database } from '../../types/supabase'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { NextResponse } from 'next/server'
 
 export default function AccountForm({ session }: { session: Session | null }) {
   const supabase = createClientComponentClient<Database>()
@@ -18,9 +17,6 @@ export default function AccountForm({ session }: { session: Session | null }) {
     try {
       setLoading(true)
 
-      if(!session){
-        NextResponse.redirect("/")
-      }
 
       let { data, error, status } = await supabase
         .from('profiles')
