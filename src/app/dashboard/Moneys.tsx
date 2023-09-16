@@ -5,8 +5,11 @@ interface Props {
 
 export default function Moneys({ message, money }: Props) {
   return (
-    <div className="p-2 px-4 border border-green-300 text-green-300 hover:bg-green-300 hover:text-black duration-200 mt-10 rounded-lg">
-      <div>{message + " " + money} </div>
+    <div className="p-5 px-5 border border-gray-400 text-white hover:bg-purple-300 hover:text-black duration-200 mt-2 rounded-lg w-96">
+      <h1>{message}</h1>
+      <div className="font-bold text-2xl">
+        <div>{"$" + money} </div>
+      </div>
     </div>
   );
 }
