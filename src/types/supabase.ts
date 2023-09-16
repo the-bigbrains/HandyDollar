@@ -14,6 +14,7 @@ export interface Database {
           avatar_url: string | null
           full_name: string | null
           id: string
+          img_url: string[] | null
           updated_at: string | null
           username: string | null
           website: string | null
@@ -22,6 +23,7 @@ export interface Database {
           avatar_url?: string | null
           full_name?: string | null
           id: string
+          img_url?: string[] | null
           updated_at?: string | null
           username?: string | null
           website?: string | null
@@ -30,6 +32,7 @@ export interface Database {
           avatar_url?: string | null
           full_name?: string | null
           id?: string
+          img_url?: string[] | null
           updated_at?: string | null
           username?: string | null
           website?: string | null
