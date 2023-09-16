@@ -14,15 +14,13 @@ import { client } from "./setAccessToken";
 type Data = {};
 
 export default async function sync(accessToken: string) {
-  // return a cursor.
-  let cursor = "";
-
   // New transaction updates since "cursor"
   let added: Array<Transaction> = [];
   let modified: Array<Transaction> = [];
   // Removed transaction ids
   let removed: Array<RemovedTransaction> = [];
   let hasMore = true;
+  let cursor = undefined;
 
   // Iterate through each page of new transaction updates for item
   while (hasMore) {
@@ -30,6 +28,7 @@ export default async function sync(accessToken: string) {
       access_token: accessToken,
       cursor: cursor,
       options: { include_personal_finance_category: true },
+      count: 30,
     };
 
     const response = await client.transactionsSync(request);
@@ -40,7 +39,7 @@ export default async function sync(accessToken: string) {
     modified = modified.concat(data.modified);
     removed = removed.concat(data.removed);
 
-    hasMore = data.has_more;
+    hasMore = false;
 
     // Update cursor to the next cursor
     cursor = data.next_cursor;
