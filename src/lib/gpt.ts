@@ -1,17 +1,12 @@
 import OpenAI from "openai";
-//const {Configuration, OpenAIApi} = require('openai');
 import computerVision from "@/lib/computerVision";
 
-/*const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-const openai = new OpenAIApi(configuration);*/
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export default async function gpt(attributes: string[]) {
+export default async function gpt(attributes: string[]) { 
   const completion = await openai.chat.completions.create({
     messages: [
       {
@@ -36,7 +31,7 @@ export default async function gpt(attributes: string[]) {
       },
     ],
     model: "gpt-3.5-turbo",
-    temperature: 0.7,
+    temperature: 0.7, 
   });
 
   console.log(completion.choices);
