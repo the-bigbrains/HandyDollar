@@ -2,26 +2,25 @@
 
 import React, { useEffect, useState } from "react";
 import computerVision from "@/lib/computerVision";
-import gpt from "@/lib/gpt";
 
 interface Props {
   gpt: string[];
 }
 
 const Vision = async (props: Props) => {
-  const [stuff, setStuff] = useState<Choice[]>([]);
+  // const [stuff, setStuff] = useState<Choice[]>([]);
 
-  useEffect(() => {
-    const yeet = async () => {
-      if (!stuff.length) {
-        console.log("running");
-        const test = await gpt(stuff)
-        setStuff(test);
-      }
-    };
+  // useEffect(() => {
+  //   const yeet = async () => {
+  //     if (!stuff.length) {
+  //       console.log("running");
+  //       const test =
+  //       setStuff(test);
+  //     }
+  //   };
 
-    yeet();
-  }, []);
+  //   yeet();
+  // }, []);
 
   return (
     <main className="text-white">
