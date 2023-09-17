@@ -76,6 +76,12 @@ export default function UploadChoice() {
                   if (!event.target.files) return;
 
                   const image = event.target.files[0];
+
+                  if (!image) {
+                    console.log("empty image!");
+                    return;
+                  }
+
                   const imgURL = await upload(image);
                   const response = await supabaseClient.auth.getUser();
 

@@ -30,11 +30,12 @@ export default function AccountForm() {
   const getProfile = useCallback(async () => {
     try {
       setLoading(true);
+      if (!user) return;
 
       let { data, error, status } = await supabase
         .from("profiles")
         .select(`full_name, username, website, avatar_url`)
-        .eq("id", user?.id as string)
+        .eq("id", user.id as string)
         .single();
 
       if (error && status !== 406) {
@@ -70,9 +71,10 @@ export default function AccountForm() {
   }) {
     try {
       setLoading(true);
+      if (!user) return;
 
       let { error } = await supabase.from("profiles").upsert({
-        id: user?.id as string,
+        id: user.id,
         full_name: fullname,
         username,
         website,
