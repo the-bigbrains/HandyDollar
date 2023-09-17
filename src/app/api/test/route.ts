@@ -5,6 +5,18 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
+interface Receipt {
+  IsReceipt: boolean;
+  Items: {
+    Name: string;
+    Price: number;
+    Quantity: number;
+    Category: string;
+  }[];
+  TransactionID: string;
+  TransactionDate: string;
+}
+
 export async function POST(request: Request, response: Response) {
   const supabaseServer = createServerComponentClient<Database>({
     cookies,
@@ -47,6 +59,10 @@ export async function POST(request: Request, response: Response) {
       if (!useful) return;
 
       console.log(useful);
+      const sanitizedResult = JSON.parse(
+        useful.split("\n").join("")
+      ) as Receipt;
+      console.log(sanitizedResult);
 
       const { data: imgURLArrayData } = await supabaseServer
         .from("profiles")
@@ -62,7 +78,6 @@ export async function POST(request: Request, response: Response) {
 
       if (!imgURLArrayData) return;
       if (!responseArrayData) return;
-      console.log("userId", userId);
 
       const { data: what } = await supabaseServer
         .from("profiles")
@@ -74,8 +89,6 @@ export async function POST(request: Request, response: Response) {
         .eq("id", userId)
         .select();
 
-      console.log("what", what);
-
       await supabaseServer
         .from("profiles")
         .update({
@@ -85,7 +98,7 @@ export async function POST(request: Request, response: Response) {
         })
         .eq("id", userId);
 
-      return useful;
+      return sanitizedResult;
     }
   };
 

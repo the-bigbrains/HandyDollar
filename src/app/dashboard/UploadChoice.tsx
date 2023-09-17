@@ -2,6 +2,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import upload from "@/lib/upload";
+import processReceipt from "@/lib/processReceipt";
+import { supabaseClient } from "@/lib/supabaseClient";
 
 export default function UploadChoice() {
   const [toggle, setToggle] = useState(false);
@@ -66,8 +68,23 @@ export default function UploadChoice() {
               <input
                 className="min-w-min"
                 type="file"
-                onChange={async (event) => {
-                  const result = await upload(event);
+                onChange={async (
+                  event: React.FormEvent<HTMLInputElement> & {
+                    target: { files: FileList | null };
+                  }
+                ) => {
+                  if (!event.target.files) return;
+
+                  const image = event.target.files[0];
+                  const imgURL = await upload(image);
+                  const response = await supabaseClient.auth.getUser();
+
+                  if (!response.data.user || !imgURL) return;
+
+                  const receipt = await processReceipt(
+                    imgURL,
+                    response.data.user.id
+                  );
                 }}
               />
             </li>

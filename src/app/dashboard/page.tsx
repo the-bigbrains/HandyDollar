@@ -1,9 +1,13 @@
-import sync from "@/lib/sync";
+"use client";
+
+import getTxArray from "@/lib/getTxArray";
 import TransactionCardList from "./TxCardList";
 import Graph1 from "./Graph1";
 import Moneys from "./Moneys";
 import AccountInfo from "./accountInfo";
 import UploadChoice from "./UploadChoice";
+import { Transaction } from "plaid";
+import { useEffect, useState } from "react";
 
 const sandboxToken = "access-sandbox-4b5dcec0-fbfd-4ba4-8db8-1fd4eee03111";
 
@@ -11,9 +15,17 @@ const sandboxToken = "access-sandbox-4b5dcec0-fbfd-4ba4-8db8-1fd4eee03111";
 
 // make a function to loop over txArray and add up all the positive values and return it
 
-export default async function Dashboard() {
+export default function Dashboard() {
   //sandbox access key generated from setAccessToken()
-  const txArray = await sync(sandboxToken);
+  const [txArray, setTxArray] = useState<Transaction[]>([]);
+
+  useEffect(() => {
+    const temp = async () => {
+      const result = await getTxArray(sandboxToken);
+      setTxArray(result);
+    };
+    temp();
+  }, []);
 
   const moneySpent = txArray.reduce((total, tx) => {
     if (tx.amount > 0) {
