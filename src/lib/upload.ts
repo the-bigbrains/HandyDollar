@@ -4,6 +4,7 @@ const upload = async (event: React.FormEvent<HTMLInputElement>) => {
   const { data: kek } = await supabaseClient.auth.getUser();
   console.log("id", kek.user?.id);
 
+  // @ts-ignore
   const image = event.target.files[0];
 
   if (!image) return;
