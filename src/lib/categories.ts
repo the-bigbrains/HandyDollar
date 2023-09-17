@@ -16,7 +16,7 @@ interface jsonData {
 }
 
 // Create a function to categorize the items
-export function categories(test: jsonData): Item[] {
+export function categories(test: { response: string }) {
   const receipt = JSON.parse(test.response.split("\n").join(""));
 
   const categoryMap = new Map<string, { total: number; names: string[] }>(); // Create a map to store the category and total price
@@ -34,11 +34,15 @@ export function categories(test: jsonData): Item[] {
     }
   );
 
-  const result: { Category: string; Price: number; Name: string }[] = [];
+  const result: any[] = [];
 
   // Loop through the map and add each category and price to the result array
   categoryMap.forEach((totalPrice, category) => {
-    result.push({ Category: category, Price: totalPrice, Name: totalPrice.names.join(", ") });
+    result.push({
+      Category: category,
+      Price: totalPrice,
+      Name: totalPrice.names.join(", "),
+    });
   });
 
   return result; // Return the result array

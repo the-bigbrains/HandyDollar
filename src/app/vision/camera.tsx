@@ -139,24 +139,10 @@ export default function Camera() {
                 const imgURL = await upload(file);
                 console.log("After", imgURL);
 
-                const getUser = async () => {
-                  const {
-                    data: { user },
-                  } = await supabaseClient.auth.getUser();
-                  return user;
-                };
-
-                const user = await getUser();
-                if (!user) return;
-                if (!imgURL) return;
-                const temp = await processReceipt(imgURL, user.id);
+                const res = await supabaseClient.auth.getUser();
+                if (!res.data.user || !imgURL) return;
+                const temp = await processReceipt(imgURL, res.data.user.id);
                 const result = await temp.json();
-                const receipt = JSON.parse(
-                  result.response.split("\n").join("")
-                );
-                if (checkReceipt(receipt)) {
-                  //Add it to the TxCard
-                }
               }}
             >
               Check Receipt

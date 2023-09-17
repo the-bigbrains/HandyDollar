@@ -4,9 +4,12 @@ import Link from "next/link";
 import upload from "@/lib/upload";
 import processReceipt from "@/lib/processReceipt";
 import { supabaseClient } from "@/lib/supabaseClient";
+import { useRouter } from "next/navigation";
 
 export default function UploadChoice() {
   const [toggle, setToggle] = useState(false);
+
+  const router = useRouter();
 
   const handleClicked = () => {
     setToggle(false);
@@ -95,7 +98,7 @@ export default function UploadChoice() {
               />
             </li>
             <li className="text-black hover:text-purple-300 hover:border-purple-300 border-black border-2 rounded-lg p-2 mx-2 duration-200">
-              <Link href="/vision">Take photo</Link>
+              <button onClick={() => router.push("/vision")}>Take photo</button>
             </li>
           </ul>
         )}
