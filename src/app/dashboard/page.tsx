@@ -35,7 +35,9 @@ export default async function Dashboard() {
       <div className="text-purple-300 py-4 px-8 flex border-b border-gray-600 items-center">
         <div className="mr-auto text-3xl">Dashboard</div>
         <div className="px-8 hover:cursor-pointer hover:underline">Account</div>
-        <div className="px-8 hover:cursor-pointer hover:underline">Upload Receipt</div>
+        <div className="px-8 hover:cursor-pointer hover:underline">
+          <a href="../vision">Upload Receipt</a>
+        </div>
       </div>
       <div className="flex justify-center mb-5 gap-20">
         <Moneys
