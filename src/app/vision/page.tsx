@@ -1,9 +1,10 @@
 "use client";
 
+import ProcessReceiptBtn from "@/comp/ProcessReceiptBtn";
 import React from "react";
 
 const Page = () => {
-  return <div>dashboard</div>;
+  return <ProcessReceiptBtn />;
 };
 
 export default Page;
