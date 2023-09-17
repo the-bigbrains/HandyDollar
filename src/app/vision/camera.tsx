@@ -1,6 +1,17 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
+import { supabaseClient } from "@/lib/supabaseClient";
+import processReceipt from "@/lib/processReceipt";
+
+function checkReceipt(jsonData: any) {
+  if (jsonData && jsonData.IsReceipt === true) {
+    return true;
+  } else {
+    alert("This is not a receipt! Try Again!");
+    return false;
+  }
+}
 
 export default function Camera() {
   // Specify the type as HTMLVideoElement for videoRef
@@ -64,7 +75,10 @@ export default function Camera() {
       <div className="Camera">
         <div>
           <div className="text-purple-300 py-4 px-8 flex border-b border-gray-600 items-center">
-            <div className="mr-auto text-3xl"> <Link href="/dashboard"> Dashboard </Link></div>
+            <div className="mr-auto text-3xl">
+              {" "}
+              <Link href="/dashboard"> Dashboard </Link>
+            </div>
             <div className="px-8 flex items-center gap-10">
               <button
                 className="hover:cursor-point hover:underline"
@@ -98,6 +112,39 @@ export default function Camera() {
             <div className={`result ${hasPhoto ? "hasPhoto" : ""}`}>
               <canvas ref={photoRef}></canvas>
             </div>
+            <button
+              className=" text-black"
+              onClick={async () => {
+                const canvasImg = photoRef.current;
+                const dataUrl = canvasImg?.toDataURL("image/jpg");
+
+                const image = new Image();
+                image.src = dataUrl || "";
+
+                const imgURL = 
+
+                const getUser = async () => {
+                  const {
+                    data: { user },
+                  } = await supabaseClient.auth.getUser();
+                  return user;
+                };
+
+                const user = await getUser();
+                if (!user) return;
+                const temp = await processReceipt(imgURL, user.id);
+                const result = await temp.json();
+                const receipt = JSON.parse(
+                  result.response.split("\n").join("")
+                );
+                if (checkReceipt(receipt)) {
+                  //Add it to the TxCard
+                }
+
+              }}
+            >
+              Check Receipt
+            </button>
           </div>
         </div>
       </div>
