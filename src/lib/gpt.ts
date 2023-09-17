@@ -39,7 +39,5 @@ export default async function gpt(attributes: string[]) {
     temperature: 0.7,
   });
 
-  console.log(completion.choices);
-
   return completion.choices;
 }
