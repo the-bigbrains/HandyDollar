@@ -7,6 +7,7 @@ import AccountInfo from "./accountInfo";
 import UploadChoice from "./UploadChoice";
 import { Transaction } from "plaid";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const sandboxToken = "access-sandbox-4b5dcec0-fbfd-4ba4-8db8-1fd4eee03111";
 
@@ -74,7 +75,7 @@ export default function Dashboard() {
   return (
     <main className="flex flex-col text-white h-screen">
       <div className="text-purple-300 py-4 px-8 flex border-b border-gray-600 items-center">
-        <div className="mr-auto text-3xl">Dashboard</div>
+        <div className="mr-auto text-3xl"><Link href="/dashboard"> Dashboard </Link></div>
         <div className="px-8 hover:cursor-pointer hover:underline">
           <AccountInfo />
         </div>
