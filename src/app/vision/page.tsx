@@ -1,5 +1,6 @@
 "use client";
 
+import ProcessReceiptBtn from "@/comp/ProcessReceiptBtn";
 import React from "react";
 import Camera from "./camera";
 

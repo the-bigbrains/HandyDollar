@@ -8,14 +8,12 @@ export async function POST(request: Request, response: Response) {
 
   if (!request.body) return;
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return;
+
   const findReceipt = async (imgURL: string) => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) return;
-
-    console.log("user id", user.id);
     const { data, error } = await supabase
       .from("profiles")
       .select("receipt")
@@ -38,21 +36,11 @@ export async function POST(request: Request, response: Response) {
 
       console.log(gptRes[0].message.content);
 
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      console.log("user?:", user);
-
-      if (!user) return;
-      console.log("user!");
-
       const { data, error } = await supabase
         .from("profiles")
         .select("receipt")
         .eq("id", user.id)
         .single();
-
-      console.log("data?");
 
       if (!data || !data.receipt) return;
 
@@ -67,9 +55,9 @@ export async function POST(request: Request, response: Response) {
     }
   };
 
-  const yo = await scan(test);
+  const result = await scan(test);
 
-  return NextResponse.json({ message: yo });
+  return NextResponse.json({ message: result });
 }
 
 export async function HEAD(request: Request) {}
