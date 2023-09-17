@@ -25,8 +25,8 @@ export default function Graph1({data}: props) {
         }}
         >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" label={{ value: 'Transaction dates', angle: 0, position: 'insideBottom', offset: 0   }}/>
-        <YAxis dataKey="amount" label={{value:'Amount ($)', angle: -90, position:'insideLeft'}}/>
+        <XAxis dataKey="date" label={{ value: 'Transaction dates', angle: 0, position: 'insideBottom', offset: 0   }} />
+        <YAxis dataKey="amount" label={{value:'Amount ($)', angle: -90, position:'insideLeft'}} reversed />
         <Tooltip />
         <Line type="monotone" dataKey="name" stroke="#8884d8" strokeWidth={2} />
         <Line type="monotone" dataKey="amount" stroke="#8884d8" strokeWidth={2} />  
