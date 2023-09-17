@@ -3,6 +3,7 @@ import TransactionCardList from "./TxCardList";
 import Graph from "./Graph";
 import Moneys from "./Moneys";
 import Link from "next/link";
+import UploadChoice from "./UploadChoice";
 
 const sandboxToken = "access-sandbox-4b5dcec0-fbfd-4ba4-8db8-1fd4eee03111";
 
@@ -36,7 +37,7 @@ export default async function Dashboard() {
         <div className="mr-auto text-3xl">Dashboard</div>
         <div className="px-8 hover:cursor-pointer hover:underline">Account</div>
         <div className="px-8 hover:cursor-pointer hover:underline">
-          <a href="../vision">Upload Receipt</a>
+          <UploadChoice />
         </div>
       </div>
       <div className="flex justify-center mb-5 gap-20">
