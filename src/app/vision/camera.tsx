@@ -129,34 +129,18 @@ export default function Camera() {
                 const blob = new Blob([ab], { type: "image/png" });
 
                 // Create a File object from the Blob
-                const file = new File([blob], "image/png", {
+                const file = new File([blob], `${Math.random() * 100}.png`, {
                   type: "image/png",
                 });
 
-                
                 console.log("Before", file);
                 const imgURL = await upload(file);
                 console.log("After", imgURL);
 
-
-                const getUser = async () => {
-                  const {
-                    data: { user },
-                  } = await supabaseClient.auth.getUser();
-                  return user;
-                };
-
-                const user = await getUser();
-                if (!user) return;
-                if (!imgURL) return;
-                const temp = await processReceipt(imgURL, user.id);
+                const res = await supabaseClient.auth.getUser();
+                if (!res.data.user || !imgURL) return;
+                const temp = await processReceipt(imgURL, res.data.user.id);
                 const result = await temp.json();
-                const receipt = JSON.parse(
-                  result.response.split("\n").join("")
-                );
-                if (checkReceipt(receipt)) {
-                  //Add it to the TxCard
-                }
               }}
             >
               Check Receipt
