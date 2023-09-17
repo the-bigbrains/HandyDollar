@@ -1,34 +1,25 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Camera from "./Camera";
-import FormRow from "@/comp/FormRow";
-import FormLabel from "@/comp/FormLabel";
+import upload from "@/lib/upload";
+import { supabaseClient } from "@/lib/supabaseClient";
+import createBucket from "@/lib/createBucket";
 
 const Page = () => {
-  const [file, setFile] = useState<File | null>();
-
-  function handleOnChange(event: React.FormEvent<HTMLInputElement>): void {
-    const target = event.target as HTMLInputElement & { files: FileList }; // Get the file from the event
-
-    if (!file) return; // Check if the file is supported by the browser
-    const formData = new FormData();
-
-    formData.append("file", file); // Add the file to the FormData object
-    formData.append("upload_preset", file); // Replace with your upload preset name
-
-    setFile(target.files[0]); // Get the first file from the FileList object
-  }
-
   return (
-    <div className="Page">
-      <div className="Camera">
-        <Camera />
-      </div>
+    <div className="bg-white ">
+      <div className="bg-white Camera">{/* <Camera /> */}</div>
+
       <div className="img">
-        <FormRow>
-          <FormLabel htmlFor="message">Image</FormLabel>
-          <input type="file" name="image" onChange={handleOnChange} />
-        </FormRow>
+        <div>
+          <label htmlFor="message">Image</label>
+          <input
+            className=" "
+            type="file"
+            name="image"
+            onChange={async (event) => upload(event)}
+          />
+        </div>
       </div>
     </div>
   );

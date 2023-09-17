@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -57,6 +58,10 @@ export default function Camera() {
     getVideo();
   }, [videoRef]);
 
+  return (
+    // Display the video and photo elements
+    <div className="App">
+      <div className="Camera">
   return (
     // Display the video and photo elements
     <div>
