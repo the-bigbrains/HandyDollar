@@ -64,7 +64,7 @@ export default function Camera() {
       <div className="Camera">
         <div>
           <div className="text-purple-300 py-4 px-8 flex border-b border-gray-600 items-center">
-            <div className="mr-auto text-3xl">Dashboard</div>
+            <div className="mr-auto text-3xl"> <Link href="/dashboard"> Dashboard </Link></div>
             <div className="px-8 flex items-center gap-10">
               <button
                 className="hover:cursor-point hover:underline"
