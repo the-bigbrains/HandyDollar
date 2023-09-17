@@ -141,7 +141,7 @@ export default function Camera() {
                 console.log("After", imgURL);
 
 
-                /*const getUser = async () => {
+                const getUser = async () => {
                   const {
                     data: { user },
                   } = await supabaseClient.auth.getUser();
@@ -158,7 +158,7 @@ export default function Camera() {
                 );
                 if (checkReceipt(receipt)) {
                   //Add it to the TxCard
-                }*/
+                }
               }}
             >
               Check Receipt
