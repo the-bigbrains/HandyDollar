@@ -72,8 +72,6 @@ export default function Camera() {
 
   return (
     // Display the video and photo elements
-    <div className="App">
-      <div className="Camera">
         <div>
           <div className="text-purple-300 py-4 px-8 flex border-b border-gray-600 items-center">
             <div className="mr-auto text-3xl">
@@ -108,13 +106,13 @@ export default function Camera() {
               </button>
             </div>
           </div>
-          <div className="flex items-center px-10 justify-evenly mt-10">
+          <div className="flex items-center px-6 justify-evenly mt-10 gap-4">
             <video ref={videoRef}></video>
             <div className={`result ${hasPhoto ? "hasPhoto" : ""}`}>
               <canvas ref={photoRef}></canvas>
             </div>
             <button
-              className=" text-black"
+              className="text-purple-300 border border-purple-300 rounded-lg px-4 py-2 hover:bg-purple-300 hover:text-white duration-200"
               onClick={async () => {
                 const canvasImg = photoRef.current;
                 const dataUrl = canvasImg?.toDataURL("image/png");
@@ -165,7 +163,5 @@ export default function Camera() {
             </button>
           </div>
         </div>
-      </div>
-    </div>
   );
 }
