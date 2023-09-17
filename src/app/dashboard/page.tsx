@@ -4,6 +4,7 @@ import Graph from "./Graph";
 import Moneys from "./Moneys";
 import Link from "next/link";
 
+
 const sandboxToken = "access-sandbox-4b5dcec0-fbfd-4ba4-8db8-1fd4eee03111";
 
 // make a function to loop over txArray and add up all the positive values and return it
@@ -28,6 +29,26 @@ export default async function Dashboard() {
     }
   }, 0);
 
+  const largestPurchase = txArray.reduce((largest, tx) => {
+    if (tx.amount > largest) {
+      return tx.amount;
+    } else {
+      return largest;
+    }
+  }, 0);
+
+  const biggestGain = txArray.reduce((largest, tx) => {
+    if (tx.amount < largest) {
+      return tx.amount;
+    } else {
+      return largest;
+    }
+  }, Number.MAX_SAFE_INTEGER);
+
+  const averagePurchase = txArray.reduce((total, tx) => {
+    return (total += tx.amount);
+  }, 0);
+
   return (
     <main className="flex flex-col text-white h-screen">
       <div className="text-purple-300 py-4 px-8 flex border-b border-gray-600 items-center">
@@ -42,15 +63,21 @@ export default async function Dashboard() {
       <div className="flex justify-center mb-5 gap-20">
         <Moneys
           message="Net"
-          money={parseFloat((moneySpent - moneyEarned).toFixed(2))}
+          money={parseFloat((moneySpent + moneyEarned).toFixed(2))}
+          fact="Average purchase:"
+          stat={parseFloat((averagePurchase / txArray.length).toFixed(2))}
         />
         <Moneys
           message="Money spent"
           money={parseFloat(moneySpent.toFixed(2))}
+          fact="Largest expense: "
+          stat={largestPurchase}
         />
         <Moneys
           message="Money earned"
           money={parseFloat(moneyEarned.toFixed(2))}
+          fact="Biggest income: "
+          stat={Math.abs(biggestGain)}
         />
       </div>
       <div className="w-full flex flex-row h-full px-20">
