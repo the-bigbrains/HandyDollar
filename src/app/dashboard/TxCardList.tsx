@@ -8,10 +8,12 @@ interface Props {
 
 const TransactionCardList = (props: Props) => {
   return (
-    <div className="gap-y-2 flex flex-col items-start">
-      {props.txArray.map((tx) => (
-        <TxCard tx={tx} />
-      ))}
+    <div className="">
+      <div className="gap-y-2 p-4 flex flex-col items-start overflow-auto no-scrollbar borde border-gray-100 rounded-lg">
+        {props.txArray.map((tx) => (
+          <TxCard tx={tx} />
+        ))}
+      </div>
     </div>
   );
 };
