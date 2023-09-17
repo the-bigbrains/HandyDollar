@@ -37,6 +37,9 @@ export default async function Dashboard() {
         <div className="px-8 hover:cursor-pointer hover:underline">Account</div>
         <div className="px-8 hover:cursor-pointer hover:underline">Upload Receipt</div>
       </div>
+      <div className="flex justify-center mb-20 gap-20">
+        <Moneys message="Money spent: " money={10} />
+        <Moneys message="Money earned: " money={20} />
       <div className="flex justify-center mb-5 gap-20">
         <Moneys message="Net" money={parseFloat((moneySpent - moneyEarned).toFixed(2))} />
         <Moneys message="Money spent" money={parseFloat(moneySpent.toFixed(2))}/>
