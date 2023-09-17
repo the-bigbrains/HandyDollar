@@ -4,6 +4,7 @@ import Graph1 from "./Graph1";
 import Moneys from "./Moneys";
 import AccountInfo from "./accountInfo";
 import UploadChoice from "./UploadChoice";
+import Link from "next/link";
 
 const sandboxToken = "access-sandbox-4b5dcec0-fbfd-4ba4-8db8-1fd4eee03111";
 
