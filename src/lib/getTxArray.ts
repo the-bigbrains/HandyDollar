@@ -13,7 +13,7 @@ import { client } from "./setAccessToken";
 
 type Data = {};
 
-export default async function sync(accessToken: string) {
+export default async function getTxArray(accessToken: string) {
   // New transaction updates since "cursor"
   let added: Array<Transaction> = [];
   let modified: Array<Transaction> = [];

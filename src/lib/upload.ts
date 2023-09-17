@@ -1,10 +1,8 @@
 import { supabaseClient } from "./supabaseClient";
 
-const upload = async (event: React.FormEvent<HTMLInputElement>) => {
+const upload = async (image: File) => {
   const { data: kek } = await supabaseClient.auth.getUser();
   console.log("id", kek.user?.id);
-
-  const image = event.target.files[0];
 
   if (!image) return;
 
