@@ -1,5 +1,7 @@
 "use client";
 
+import { categories } from "@/lib/categories";
+import processReceipt from "@/lib/processReceipt";
 import { supabaseClient } from "@/lib/supabaseClient";
 
 export default function Page() {
@@ -18,6 +20,11 @@ export default function Page() {
       className=" text-black"
       onClick={async () => {
         const user = await getUser();
+        if (!user) return;
+        const temp = await processReceipt(imgURL, user.id);
+        const result = await temp.json();
+        console.log(result);
+        console.log("ANWER:", categories(result));
       }}
     >
       fetch

@@ -1,11 +1,9 @@
-"use client";
 import sync from "@/lib/sync";
 import TransactionCardList from "./TxCardList";
 import Graph1 from "./Graph1";
 import Moneys from "./Moneys";
 import AccountInfo from "./accountInfo";
 import UploadChoice from "./UploadChoice";
-import { supabaseClient } from "@/lib/supabaseClient";
 
 const sandboxToken = "access-sandbox-4b5dcec0-fbfd-4ba4-8db8-1fd4eee03111";
 
@@ -14,10 +12,6 @@ const sandboxToken = "access-sandbox-4b5dcec0-fbfd-4ba4-8db8-1fd4eee03111";
 // make a function to loop over txArray and add up all the positive values and return it
 
 export default async function Dashboard() {
-  const {
-    data: { session },
-  } = await supabaseClient.auth.getSession();
-
   //sandbox access key generated from setAccessToken()
   const txArray = await sync(sandboxToken);
 
@@ -62,7 +56,7 @@ export default async function Dashboard() {
       <div className="text-purple-300 py-4 px-8 flex border-b border-gray-600 items-center">
         <div className="mr-auto text-3xl"><Link href="/dashboard"> Dashboard </Link></div>
         <div className="px-8 hover:cursor-pointer hover:underline">
-          <AccountInfo session={session} />
+          <AccountInfo />
         </div>
         <div className="px-8 hover:cursor-pointer hover:underline">
           <UploadChoice />

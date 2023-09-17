@@ -1,11 +1,16 @@
 import computerVision from "@/lib/computerVision";
 import gpt from "@/lib/gpt";
-import { supabaseServer } from "@/lib/supabase";
+import { Database } from "@/types/supabase";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 export async function POST(request: Request, response: Response) {
-  const { imgURL, userId } = await request.json();
+  const supabaseServer = createServerComponentClient<Database>({
+    cookies,
+  });
 
+  const { imgURL, userId } = await request.json();
   const findImage = async () => {
     const { data: imgURLArrayData } = await supabaseServer
       .from("profiles")
