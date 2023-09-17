@@ -76,40 +76,39 @@ export default function AccountForm({ session }: { session: Session | null }) {
   }
 
   return (
-    <div className="h-screen items-center justify-center flex flex-col text-white text-xl">
+    <div className="flex flex-col justify-center items-center fixed mt-10 bg-white px-2 py-4 rounded-lg gap-5 text-center text-black">
       <div>
-        <h1 className='text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-gray-500 pb-3'>Account Information</h1>
       </div>
       <div>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">Email: </label>
         <input id="email" type="text" value={session?.user.email} disabled />
       </div>
       <div>
-        <label htmlFor="fullName">Full Name</label>
+        <label htmlFor="fullName">Full Name: </label>
         <input
           id="fullName"
           type="text"
-          className='text-black'
+          className='bg-black bg-opacity-10 p-1 rounded-lg'
           value={fullname || ''}
           onChange={(e) => setFullname(e.target.value)}
         />
       </div>
       <div>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">Username: </label>
         <input
           id="username"
-          className='text-black'
+          className='bg-black bg-opacity-10 p-1 rounded-lg'
           type="text"
           value={username || ''}
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
       <div>
-        <label htmlFor="website">Website</label>
+        <label htmlFor="website">Website: </label>
         <input
           id="website"
           type="url"
-          className='text-black'
+          className='bg-black bg-opacity-10 p-1 rounded-lg'
           value={website || ''}
           onChange={(e) => setWebsite(e.target.value)}
         />
@@ -117,7 +116,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
 
       <div>
         <button
-          className=""
+          className="text-black hover:text-purple-300 hover:border-purple-300 border-black border-2 rounded-lg p-2 mx-2 duration-20"
           onClick={() => updateProfile({ fullname, username, website, avatar_url })}
           disabled={loading}
         >
@@ -127,7 +126,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
 
       <div>
         <form action="/auth/signout" method="post">
-          <button className="button block" type="submit">
+          <button className="button block text-black hover:text-purple-300 hover:border-purple-300 border-black border-2 rounded-lg p-2 mx-2 duration-20" type="submit">
             Sign out
           </button>
         </form>
