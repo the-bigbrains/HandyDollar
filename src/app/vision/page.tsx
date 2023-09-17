@@ -7,19 +7,9 @@ import createBucket from "@/lib/createBucket";
 
 const Page = () => {
   return (
-    <div className="bg-white ">
-      <div className="bg-white Camera">{/* <Camera /> */}</div>
-
-      <div className="img">
-        <div>
-          <label htmlFor="message">Image</label>
-          <input
-            className=" "
-            type="file"
-            name="image"
-            onChange={async (event) => upload(event)}
-          />
-        </div>
+    <div className="flex bg-white ">
+      <div className="bg-white">
+        <Camera />
       </div>
     </div>
   );
