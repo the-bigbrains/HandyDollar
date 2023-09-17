@@ -8,14 +8,14 @@ const upload = async (image: File) => {
 
   const { data: pathData, error } = await supabaseClient.storage
     .from("receipts")
-    .upload(`${image.name}.jpg`, image, {
+    .upload(`${image.name}`, image, {
       cacheControl: "3600",
       upsert: false,
     });
 
   const { data } = supabaseClient.storage
     .from("receipts")
-    .getPublicUrl(`${image.name}.jpg`);
+    .getPublicUrl(`${image.name}`);
   return data.publicUrl;
 };
 

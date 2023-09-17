@@ -1,6 +1,5 @@
 "use client";
 
-import getTxArray from "@/lib/getTxArray";
 import TransactionCardList from "./TxCardList";
 import Graph1 from "./Graph1";
 import Moneys from "./Moneys";
@@ -22,9 +21,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     const temp = async () => {
-      const result = await getTxArray(sandboxToken);
-      setTxArray(result);
+      const result = await fetch("/api/getTransaction", {
+        method: "POST",
+        body: JSON.stringify(sandboxToken),
+      });
+
+      const temp = await result.json();
+
+      console.log(result);
+
+      setTxArray(temp);
     };
+
     temp();
   }, []);
 
