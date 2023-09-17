@@ -4,8 +4,8 @@ import Camera from "./camera";
 
 const Page = () => {
   return (
-    <div className="flex bg-white ">
-      <div className="bg-white">
+    <div>
+      <div>
         <Camera />
       </div>
     </div>
