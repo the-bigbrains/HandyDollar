@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Transaction } from "plaid";
 import React from "react";
 import TxCard from "./TxCard";
@@ -7,13 +7,11 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/types/supabase";
 import Receipt from "@/types/receipt";
 
-
 interface Props {
   txArray: Transaction[];
 }
 
 const TransactionCardList = (props: Props) => {
-
   const supabase = createClientComponentClient<Database>();
   const [rec, setRec] = useState<Receipt[]>([]);
 
@@ -21,50 +19,51 @@ const TransactionCardList = (props: Props) => {
   let t2 = props.txArray[1];
   let t3 = props.txArray[2];
 
-  if(t1 && t2 && t3){
-    t1.name = "Whole Foods"
-    t1.amount = 63.63
-    t1.category = ["Food and Drink", "Groceries"]
+  if (t1 && t2 && t3) {
+    t1.name = "Whole Foods";
+    t1.amount = 63.63;
+    t1.category = ["Food and Drink", "Groceries"];
 
-    t2.name = "Berghotel"
-    t2.amount = 54.50
-    t2.category = ["Travel", "Hotel"]
+    t2.name = "Berghotel";
+    t2.amount = 54.5;
+    t2.category = ["Travel", "Hotel"];
 
-    t3.name = "Costco Wholesale"
-    t3.amount = 17.30
-    t3.category = ["Food and Drink", "Groceries"]
-
+    t3.name = "Costco Wholesale";
+    t3.amount = 17.3;
+    t3.category = ["Food and Drink", "Groceries"];
   }
 
-    useEffect(() => {
-    
+  useEffect(() => {
     async function getSession() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
 
-      if(session){
+      if (session) {
         const user = session.user;
 
         let { data, error, status } = await supabase
-          .from('profiles')
+          .from("profiles")
           .select(`responseArray`)
           .eq("id", user?.id as string)
-          .single()
+          .single();
 
         if (error && status !== 406) {
           throw error;
         }
 
         if (data && data.responseArray) {
-          // map through the response array 
-          setRec(data.responseArray.map((stringified) => {
-            return JSON.parse(stringified.split("\n").join("")) as Receipt;
-          }));
-
+          // map through the response array
+          setRec(
+            data.responseArray.map((stringified) => {
+              if (typeof stringified === "string") {
+                return JSON.parse(stringified.split("\n").join("")) as Receipt;
+              } else {
+                return stringified;
+              }
+            })
+          );
         }
-        
-
       }
     }
 
@@ -75,7 +74,7 @@ const TransactionCardList = (props: Props) => {
     <div className="">
       <div className="gap-y-2 p-4 flex flex-col items-start overflow-auto no-scrollbar borde border-gray-100 rounded-lg">
         {props.txArray.map((tx, i) => (
-          <TxCard tx={tx} details={i<3 ? rec[i] : undefined}/>
+          <TxCard key={i} tx={tx} details={i < 3 ? rec[i] : undefined} />
         ))}
       </div>
     </div>
