@@ -1,12 +1,14 @@
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-
+export type Receipt = {
+  img_url: string | null;
+  response: string | null;
+};
 export type Json =
   | string
   | number
   | boolean
   | null
-  | { [key: string]: Json | undefined }
-  | Json[];
+  | { [key: string]: Receipt | undefined }
+  | Receipt[];
 
 export interface Database {
   public: {
@@ -16,7 +18,7 @@ export interface Database {
           avatar_url: string | null;
           full_name: string | null;
           id: string;
-          img_url: string[] | null;
+          receipt: Receipt[] | null;
           updated_at: string | null;
           username: string | null;
           website: string | null;
@@ -25,7 +27,7 @@ export interface Database {
           avatar_url?: string | null;
           full_name?: string | null;
           id: string;
-          img_url?: string[] | null;
+          receipt?: Receipt[] | null;
           updated_at?: string | null;
           username?: string | null;
           website?: string | null;
@@ -34,7 +36,7 @@ export interface Database {
           avatar_url?: string | null;
           full_name?: string | null;
           id?: string;
-          img_url?: string[] | null;
+          receipt?: Receipt[] | null;
           updated_at?: string | null;
           username?: string | null;
           website?: string | null;
@@ -47,6 +49,27 @@ export interface Database {
             referencedColumns: ["id"];
           }
         ];
+      };
+      receipt: {
+        Row: {
+          created_at: string;
+          id: number;
+          img_url: string | null;
+          result: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          id?: number;
+          img_url?: string | null;
+          result?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          id?: number;
+          img_url?: string | null;
+          result?: string | null;
+        };
+        Relationships: [];
       };
     };
     Views: {
@@ -63,4 +86,3 @@ export interface Database {
     };
   };
 }
-export const supabase = createClientComponentClient<Database>();
