@@ -131,15 +131,13 @@ export default function Camera() {
                 const blob = new Blob([ab], { type: "image/png" });
 
                 // Create a File object from the Blob
-                const file = new File([blob], "image/png", {
+                const file = new File([blob], `${Math.random() * 100}.png`, {
                   type: "image/png",
                 });
 
-                
                 console.log("Before", file);
                 const imgURL = await upload(file);
                 console.log("After", imgURL);
-
 
                 const getUser = async () => {
                   const {
