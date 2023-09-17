@@ -1,7 +1,7 @@
 "use client";
 
 import processReceipt from "@/lib/processReceipt";
-import { supabaseClient } from "@/lib/supabase";
+import { supabaseClient } from "@/lib/supabaseClient";
 
 export default function Page() {
   const imgURL =

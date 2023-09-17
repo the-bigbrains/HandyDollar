@@ -4,12 +4,8 @@ import { supabaseServer } from "./supabase";
 const upload = async (event: React.FormEvent<HTMLInputElement>) => {
   const { data: bucketList } = await supabaseServer.storage.listBuckets();
 
-  let bucket: any;
-
   if (!bucketList || !bucketList.length) {
     await createBucket();
-  } else {
-    bucket = bucketList[0];
   }
 
   const image = event.target.files[0];
