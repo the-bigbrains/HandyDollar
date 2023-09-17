@@ -39,6 +39,10 @@ export default async function Dashboard() {
           </div>
         </Link>
       </div>
+      <div className="flex justify-center mb-20 gap-20">
+        <Moneys message="Money spent: " money={10} />
+        <Moneys message="Money earned: " money={20} />
+      </div>
       <div className="flex justify-center mb-5 gap-20">
         <Moneys
           message="Net"
