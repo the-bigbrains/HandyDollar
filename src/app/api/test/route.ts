@@ -1,61 +1,81 @@
 import computerVision from "@/lib/computerVision";
 import gpt from "@/lib/gpt";
-import { supabase } from "@/lib/supabase";
+import { supabaseServer } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request, response: Response) {
-  const test = await request.json();
+  const { imgURL, userId } = await request.json();
 
-  if (!request.body) return;
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return;
-
-  const findReceipt = async (imgURL: string) => {
-    const { data, error } = await supabase
+  const findImage = async () => {
+    const { data, error } = await supabaseServer
       .from("profiles")
-      .select("receipt")
-      .eq("id", user.id)
+      .select("imgURLArray")
+      .eq("id", userId)
       .single();
 
-    if (!data || !data.receipt) return;
+    if (!data || !data.imgURLArray) return;
 
-    return data.receipt.find((r) => r.img_url === imgURL);
+    return data.imgURLArray.find((image) => image === imgURL);
   };
 
-  const scan = async (imgURL: string) => {
-    const receipt = await findReceipt(imgURL);
+  const scan = async () => {
+    const savedImgURL = await findImage();
 
-    if (receipt) {
-      return receipt.response;
+    if (savedImgURL) {
+      console.log("exists in DB");
+
+      return savedImgURL;
     } else {
       const azureRes = await computerVision(imgURL);
       const gptRes = await gpt(azureRes);
+      const useful = gptRes[0].message.content;
 
-      console.log(gptRes[0].message.content);
+      if (!useful) return;
 
-      const { data, error } = await supabase
+      console.log(useful);
+
+      const { data: imgURLArrayData } = await supabaseServer
         .from("profiles")
-        .select("receipt")
-        .eq("id", user.id)
+        .select("imgURLArray")
+        .eq("id", userId)
         .single();
 
-      if (!data || !data.receipt) return;
+      const { data: responseArrayData } = await supabaseServer
+        .from("profiles")
+        .select("responseArray")
+        .eq("id", userId)
+        .single();
 
-      supabase.from("profiles").update({
-        receipt: [
-          ...data.receipt,
-          { img_url: imgURL, response: gptRes[0].message.content },
-        ],
-      });
+      if (!imgURLArrayData) return;
+      if (!responseArrayData) return;
+      console.log("userId", userId);
 
-      return gptRes[0].message.content;
+      const { data: what } = await supabaseServer
+        .from("profiles")
+        .update({
+          imgURLArray: imgURLArrayData.imgURLArray
+            ? [...imgURLArrayData.imgURLArray, imgURL]
+            : [imgURL],
+        })
+        .eq("id", userId)
+        .select();
+
+      console.log("what", what);
+
+      await supabaseServer
+        .from("profiles")
+        .update({
+          responseArray: responseArrayData.responseArray
+            ? [...responseArrayData.responseArray, JSON.parse(useful)]
+            : [useful],
+        })
+        .eq("id", userId);
+
+      return useful;
     }
   };
 
-  const result = await scan(test);
+  const result = await scan();
 
   return NextResponse.json({ message: result });
 }
