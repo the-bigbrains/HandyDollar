@@ -2,31 +2,29 @@ import sync from "@/lib/sync";
 import TransactionCardList from "./TxCardList";
 import Graph from "./Graph";
 import Moneys from "./Moneys";
+import Link from "next/link";
 
 const sandboxToken = "access-sandbox-4b5dcec0-fbfd-4ba4-8db8-1fd4eee03111";
 
-  // make a function to loop over txArray and add up all the positive values and return it
-  
+// make a function to loop over txArray and add up all the positive values and return it
 
 export default async function Dashboard() {
   //sandbox access key generated from setAccessToken()
-  const txArray = await sync(sandboxToken);  
+  const txArray = await sync(sandboxToken);
 
   const moneySpent = txArray.reduce((total, tx) => {
-    if(tx.amount>0){
-      return total += tx.amount * -1;
-    }
-    else{
-      return total += 0;
+    if (tx.amount > 0) {
+      return (total += tx.amount * -1);
+    } else {
+      return (total += 0);
     }
   }, 0);
 
   const moneyEarned = txArray.reduce((total, tx) => {
-    if(tx.amount < 0 ) {
-      return total += Math.abs(tx.amount);
-    }
-    else {
-      return total += 0;
+    if (tx.amount < 0) {
+      return (total += Math.abs(tx.amount));
+    } else {
+      return (total += 0);
     }
   }, 0);
 
@@ -35,15 +33,25 @@ export default async function Dashboard() {
       <div className="text-purple-300 py-4 px-8 flex border-b border-gray-600 items-center">
         <div className="mr-auto text-3xl">Dashboard</div>
         <div className="px-8 hover:cursor-pointer hover:underline">Account</div>
-        <div className="px-8 hover:cursor-pointer hover:underline">Upload Receipt</div>
+        <Link href="/receipt">
+          <div className="px-8 hover:cursor-pointer hover:underline">
+            Upload Receipt
+          </div>
+        </Link>
       </div>
-      <div className="flex justify-center mb-20 gap-20">
-        <Moneys message="Money spent: " money={10} />
-        <Moneys message="Money earned: " money={20} />
       <div className="flex justify-center mb-5 gap-20">
-        <Moneys message="Net" money={parseFloat((moneySpent - moneyEarned).toFixed(2))} />
-        <Moneys message="Money spent" money={parseFloat(moneySpent.toFixed(2))}/>
-        <Moneys message="Money earned" money={parseFloat(moneyEarned.toFixed(2))}/>
+        <Moneys
+          message="Net"
+          money={parseFloat((moneySpent - moneyEarned).toFixed(2))}
+        />
+        <Moneys
+          message="Money spent"
+          money={parseFloat(moneySpent.toFixed(2))}
+        />
+        <Moneys
+          message="Money earned"
+          money={parseFloat(moneyEarned.toFixed(2))}
+        />
       </div>
       <div className="w-full flex flex-row h-full px-20">
         <Graph />
