@@ -55,6 +55,7 @@ export default function UploadChoice() {
             )}
           </button>
         </div>
+
         {toggle && (
           <ul
             className={
@@ -65,7 +66,9 @@ export default function UploadChoice() {
               <input
                 className="min-w-min"
                 type="file"
-                onChange={async (event) => upload(event)}
+                onChange={async (event) => {
+                  const result = await upload(event);
+                }}
               />
             </li>
             <li className="text-black hover:text-purple-300 hover:border-purple-300 border-black border-2 rounded-lg p-2 mx-2 duration-200">

@@ -7,24 +7,33 @@ export async function POST(request: Request, response: Response) {
   const { imgURL, userId } = await request.json();
 
   const findImage = async () => {
-    const { data, error } = await supabaseServer
+    const { data: imgURLArrayData } = await supabaseServer
       .from("profiles")
       .select("imgURLArray")
       .eq("id", userId)
       .single();
 
-    if (!data || !data.imgURLArray) return;
+    if (!imgURLArrayData || !imgURLArrayData.imgURLArray) return;
+    const index = imgURLArrayData.imgURLArray.findIndex(
+      (url) => url === imgURL
+    );
 
-    return data.imgURLArray.find((image) => image === imgURL);
+    const { data: responseArrayData, error } = await supabaseServer
+      .from("profiles")
+      .select("responseArray")
+      .eq("id", userId)
+      .single();
+    if (!responseArrayData || !responseArrayData.responseArray) return;
+
+    return responseArrayData.responseArray[index];
   };
 
   const scan = async () => {
-    const savedImgURL = await findImage();
+    const response = await findImage();
 
-    if (savedImgURL) {
+    if (response) {
       console.log("exists in DB");
-
-      return savedImgURL;
+      return response;
     } else {
       const azureRes = await computerVision(imgURL);
       const gptRes = await gpt(azureRes);
