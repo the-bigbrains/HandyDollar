@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Camera from "./Camera";
+import Camera from "./camera";
 import ProcessReceiptBtn from "@/comp/ProcessReceiptBtn";
 
 const Page = () => {
