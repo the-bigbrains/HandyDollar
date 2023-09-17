@@ -1,12 +1,11 @@
+"use client";
 import sync from "@/lib/sync";
 import TransactionCardList from "./TxCardList";
 import Graph1 from "./Graph1";
 import Moneys from "./Moneys";
 import AccountInfo from "./accountInfo";
 import UploadChoice from "./UploadChoice";
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import { Database } from '../../types/supabase'
+import { supabaseClient } from "@/lib/supabaseClient";
 
 const sandboxToken = "access-sandbox-4b5dcec0-fbfd-4ba4-8db8-1fd4eee03111";
 
@@ -15,12 +14,10 @@ const sandboxToken = "access-sandbox-4b5dcec0-fbfd-4ba4-8db8-1fd4eee03111";
 // make a function to loop over txArray and add up all the positive values and return it
 
 export default async function Dashboard() {
-
-  const supabase = createServerComponentClient<Database>({ cookies })
-
   const {
     data: { session },
-  } = await supabase.auth.getSession()
+  } = await supabaseClient.auth.getSession();
+
   //sandbox access key generated from setAccessToken()
   const txArray = await sync(sandboxToken);
 
@@ -65,8 +62,8 @@ export default async function Dashboard() {
       <div className="text-purple-300 py-4 px-8 flex border-b border-gray-600 items-center">
         <div className="mr-auto text-3xl">Dashboard</div>
         <div className="px-8 hover:cursor-pointer hover:underline">
-          <AccountInfo session={session}/>
-          </div>
+          <AccountInfo session={session} />
+        </div>
         <div className="px-8 hover:cursor-pointer hover:underline">
           <UploadChoice />
         </div>
@@ -92,7 +89,7 @@ export default async function Dashboard() {
         />
       </div>
       <div className="w-full flex flex-row h-full px-20">
-        <Graph1 data={txArray}/>
+        <Graph1 data={txArray} />
         <div className="w-full rounded-xl flex flex-col items-center justify-start outline-gray-500 outline mb-5">
           <div className="flex flex-col w-full">
             <div className="text-4xl mx-4 my-2">Transactions</div>

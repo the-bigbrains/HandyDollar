@@ -1,6 +1,5 @@
 "use client";
 
-import processReceipt from "@/lib/processReceipt";
 import { supabaseClient } from "@/lib/supabaseClient";
 
 export default function Page() {
@@ -16,10 +15,9 @@ export default function Page() {
 
   return (
     <button
-      className="bg-white text-white"
+      className=" text-black"
       onClick={async () => {
         const user = await getUser();
-        processReceipt(imgURL, user?.id || "");
       }}
     >
       fetch
