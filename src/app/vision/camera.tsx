@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import { supabaseClient } from "@/lib/supabaseClient";
 import processReceipt from "@/lib/processReceipt";
+import upload from "@/lib/upload";
 
 function checkReceipt(jsonData: any) {
   if (jsonData && jsonData.IsReceipt === true) {
@@ -116,14 +117,31 @@ export default function Camera() {
               className=" text-black"
               onClick={async () => {
                 const canvasImg = photoRef.current;
-                const dataUrl = canvasImg?.toDataURL("image/jpg");
+                const dataUrl = canvasImg?.toDataURL("image/png");
 
-                const image = new Image();
-                image.src = dataUrl || "";
+                if (!dataUrl) return;
 
-                const imgURL = 
+                const byteString = atob(dataUrl.split(",")[1]);
+                const ab = new ArrayBuffer(byteString.length);
+                const ia = new Uint8Array(ab);
+                for (let i = 0; i < byteString.length; i++) {
+                  ia[i] = byteString.charCodeAt(i);
+                }
 
-                const getUser = async () => {
+                const blob = new Blob([ab], { type: "image/png" });
+
+                // Create a File object from the Blob
+                const file = new File([blob], "image/png", {
+                  type: "image/png",
+                });
+
+                
+                console.log("Before", file);
+                const imgURL = await upload(file);
+                console.log("After", imgURL);
+
+
+                /*const getUser = async () => {
                   const {
                     data: { user },
                   } = await supabaseClient.auth.getUser();
@@ -132,6 +150,7 @@ export default function Camera() {
 
                 const user = await getUser();
                 if (!user) return;
+                if (!imgURL) return;
                 const temp = await processReceipt(imgURL, user.id);
                 const result = await temp.json();
                 const receipt = JSON.parse(
@@ -139,8 +158,7 @@ export default function Camera() {
                 );
                 if (checkReceipt(receipt)) {
                   //Add it to the TxCard
-                }
-
+                }*/
               }}
             >
               Check Receipt
