@@ -1,23 +1,24 @@
-import createBucket from "./createBucket";
-import { supabaseServer } from "./supabase";
+import { supabaseClient } from "./supabaseClient";
 
 const upload = async (event: React.FormEvent<HTMLInputElement>) => {
-  const { data: bucketList } = await supabaseServer.storage.listBuckets();
-
-  if (!bucketList || !bucketList.length) {
-    await createBucket();
-  }
+  const { data: kek } = await supabaseClient.auth.getUser();
+  console.log("id", kek.user?.id);
 
   const image = event.target.files[0];
 
-  const { data: pathData } = await supabaseServer.storage
-    .from("images")
-    .upload("public/avatar1.png", image, {
+  if (!image) return;
+
+  const { data: pathData, error } = await supabaseClient.storage
+    .from("receipts")
+    .upload(`${image.name}.jpg`, image, {
       cacheControl: "3600",
       upsert: false,
     });
 
-  return pathData;
+  const { data } = supabaseClient.storage
+    .from("receipts")
+    .getPublicUrl(`${image.name}.jpg`);
+  return data.publicUrl;
 };
 
 export default upload;

@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef, useEffect, useState } from "react";
 
 export default function Camera() {
@@ -18,11 +19,12 @@ export default function Camera() {
         video.srcObject = stream;
         video.play();
       })
-      .catch((err) => { 
+      .catch((err) => {
         console.log(err);
       });
   };
-  const takePhoto = () => { // Take a photo
+  const takePhoto = () => {
+    // Take a photo
     const width = 414;
     const height = width / (16 / 9);
 
@@ -34,13 +36,14 @@ export default function Camera() {
     photo.width = width;
     photo.height = height;
 
-    let ctx = photo.getContext("2d");// Get the canvas context
+    let ctx = photo.getContext("2d"); // Get the canvas context
     if (!ctx) return; // Check if the canvas context is supported by the browser
     ctx.drawImage(video, 0, 0, width, height);
     setHasPhoto(true);
   };
 
-  const closePhoto = () => { // Close the photo
+  const closePhoto = () => {
+    // Close the photo
     let photo = photoRef.current;
     if (!photo) return; // Check if the photo element is supported by the browser
     let ctx = photo.getContext("2d");
@@ -49,11 +52,13 @@ export default function Camera() {
     setHasPhoto(false);
   };
 
-  useEffect(() => {// Get the video stream from the webcam
+  useEffect(() => {
+    // Get the video stream from the webcam
     getVideo();
   }, [videoRef]);
 
-  return (// Display the video and photo elements
+  return (
+    // Display the video and photo elements
     <div className="App">
       <div className="Camera">
         <video ref={videoRef}></video>

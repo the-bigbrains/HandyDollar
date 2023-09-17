@@ -77,7 +77,7 @@ export async function POST(request: Request, response: Response) {
 
   const result = await scan();
 
-  return NextResponse.json({ message: result });
+  return NextResponse.json({ response: result });
 }
 
 export async function HEAD(request: Request) {}
