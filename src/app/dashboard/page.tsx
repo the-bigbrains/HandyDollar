@@ -11,10 +11,6 @@ import Link from "next/link";
 
 const sandboxToken = "access-sandbox-4b5dcec0-fbfd-4ba4-8db8-1fd4eee03111";
 
-// make a function to loop over txArray and add up all the positive values and return it
-
-// make a function to loop over txArray and add up all the positive values and return it
-
 export default function Dashboard() {
   //sandbox access key generated from setAccessToken()
   const [txArray, setTxArray] = useState<Transaction[]>([]);
@@ -75,7 +71,9 @@ export default function Dashboard() {
   return (
     <main className="flex flex-col text-white h-screen">
       <div className="text-purple-300 py-4 px-8 flex border-b border-gray-600 items-center">
-        <div className="mr-auto text-3xl"><Link href="/dashboard"> Dashboard </Link></div>
+        <div className="mr-auto text-3xl">
+          <Link href="/dashboard"> Dashboard </Link>
+        </div>
         <div className="px-8 hover:cursor-pointer hover:underline">
           <AccountInfo />
         </div>

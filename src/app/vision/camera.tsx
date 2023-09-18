@@ -81,7 +81,8 @@ export default function Camera() {
         <div className="px-8 flex items-center gap-10">
           <button
             className="hover:cursor-point hover:underline"
-            onClick={takePhoto}>
+            onClick={takePhoto}
+          >
             Capture
           </button>
           <button onClick={closePhoto}>
@@ -92,7 +93,8 @@ export default function Camera() {
               strokeLinejoin="round"
               strokeMiterlimit="2"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z"
                 fillRule="nonzero"
@@ -109,7 +111,8 @@ export default function Camera() {
         <div
           className={`flex flex-col items-center gap-4 result ${
             hasPhoto ? "hasPhoto" : ""
-          }`}>
+          }`}
+        >
           <canvas ref={photoRef}></canvas>
           <button
             className="text-purple-300 border border-purple-300 rounded-lg px-4 py-2 hover:bg-purple-300 hover:text-white duration-200"
@@ -139,9 +142,9 @@ export default function Camera() {
 
               const res = await supabaseClient.auth.getUser();
               if (!res.data.user || !imgURL) return;
-              const temp = await processReceipt(imgURL, res.data.user.id);
-              const result = await temp.json();
-            }}>
+              await processReceipt(imgURL, res.data.user.id);
+            }}
+          >
             Check Receipt
           </button>
         </div>

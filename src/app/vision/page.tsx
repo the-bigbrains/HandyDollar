@@ -5,9 +5,7 @@ import Camera from "./camera";
 const Page = () => {
   return (
     <div>
-      <div>
-        <Camera />
-      </div>
+      <Camera />
     </div>
   );
 };

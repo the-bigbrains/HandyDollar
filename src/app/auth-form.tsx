@@ -15,7 +15,7 @@ export default function AuthForm() {
       theme="dark"
       showLinks={false}
       providers={["github"]}
-      redirectTo="https://handy-dollars.vercel.app/auth/callback"
+      redirectTo="/auth/callback"
     />
   );
 }
