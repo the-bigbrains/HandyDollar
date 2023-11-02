@@ -32,7 +32,7 @@ export async function POST(request: Request, response: Response) {
 
     if (!imgURLArrayData || !imgURLArrayData.imgURLArray) return;
     const index = imgURLArrayData.imgURLArray.findIndex(
-      (url) => url === imgURL
+      (url) => url === imgURL,
     );
 
     const { data: responseArrayData, error } = await supabaseServer
@@ -60,7 +60,7 @@ export async function POST(request: Request, response: Response) {
 
       console.log(useful);
       const sanitizedResult = JSON.parse(
-        useful.split("\n").join("")
+        useful.split("\n").join(""),
       ) as Receipt;
       console.log(sanitizedResult);
 

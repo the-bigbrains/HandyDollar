@@ -74,7 +74,7 @@ export default function UploadChoice() {
                 onChange={async (
                   event: React.FormEvent<HTMLInputElement> & {
                     target: { files: FileList | null };
-                  }
+                  },
                 ) => {
                   if (!event.target.files) return;
 
@@ -92,7 +92,7 @@ export default function UploadChoice() {
 
                   const receipt = await processReceipt(
                     imgURL,
-                    response.data.user.id
+                    response.data.user.id,
                   );
                 }}
               />

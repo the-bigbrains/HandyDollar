@@ -61,7 +61,7 @@ const TransactionCardList = (props: Props) => {
               } else {
                 return stringified;
               }
-            })
+            }),
           );
         }
       }

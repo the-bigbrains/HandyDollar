@@ -31,7 +31,7 @@ export function categories(test: { response: string }) {
       } else {
         categoryMap.set(Category, { total: Price, names: [Name] }); // Add the category to the map
       }
-    }
+    },
   );
 
   const result: any[] = [];

@@ -12,7 +12,7 @@ const endpoint = process.env.END_POINT;
 
 const computerVisionClient = new ComputerVisionClient(
   new ApiKeyCredentials({ inHeader: { "Ocp-Apim-Subscription-Key": key } }),
-  endpoint
+  endpoint,
 );
 
 /**
@@ -59,7 +59,7 @@ function printRecText(readResults: any) {
         // Iterate through all lines and words
 
         recognitionResults.push(
-          line.words.map((w: { text: any }) => w.text).join(" ")
+          line.words.map((w: { text: any }) => w.text).join(" "),
         );
       }
     }
